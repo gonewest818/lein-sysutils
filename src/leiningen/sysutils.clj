@@ -59,6 +59,51 @@
     (doseq [[k v] m]
       (println k v))))
 
+(defn help []
+  (with-out-str
+    (println "Query system information via Apache commons SystemUtils")
+    (println "
+Usage: lein sysutils [:edn] :key1 [:key2 :key3 ...]
+
+Sysutils provided a command line interface to print and inspect
+metadata about the current system config, as provided by the Apache
+Commons SystemUtils API. The fields are presented as a hashmap, and
+can be queried by passing in one or more \"keywordized\" field names.
+
+The output is available in two forms. By default keywords and values
+are printed as pairs, separated with whitespace, one pair per line. If
+the optional :edn key is set, then the requested keys are printed as EDN.
+Depending on your situation you may find one format more convenient than
+the other.
+
+To make life easier for devops, the plugin provides an additional
+query that is not directly available in the SystemUtils library. The
+`:java-version-simple` key is mapped to a string that indicates which
+\"release\" of Java is currently in use. Because of inconsistent
+naming across vendors and releases, here the string with be normalized
+to \"1.1\", \"1.2\", ... \"1.8\", or for newer releases \"9\" and \"10\".
+
+Examples:
+
+* Print the \"simple\" Java version number
+    lein sysutils :java-version-simple
+
+* Print the Java VM name
+    lein sysutils :java-vm-name
+
+* Output multiple values as parseable EDN
+    lein sysutils :edn :java-vm-name :java-home
+
+Available Keys:
+")
+    (doseq [k (sort (keys (sysutils-map)))]
+      (println (str "    " k)))
+    (println "
+For more information on the available keys and what they mean, see
+Apache Documentation:
+
+https://commons.apache.org/proper/commons-lang/javadocs/api-3.5/org/apache/commons/lang3/SystemUtils.html")))
+
 (defn ^:no-project-needed sysutils
   "Look up system information via the Apache commons-lang3 API."
   [project & args]
