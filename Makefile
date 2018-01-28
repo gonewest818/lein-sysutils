@@ -40,7 +40,7 @@ TRAVIS_PULL_REQUEST ?= "true"
 deploy:
 	if [ "$(TRAVIS_PULL_REQUEST)" != "false" ]; then \
 	    echo "Pull request detected. Skipping deploy."; \
-	else
+	else \
 	    lein with-profile +$(VERSION) deploy clojars; \
 	fi
 
