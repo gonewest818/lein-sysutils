@@ -38,8 +38,11 @@ release:
 TRAVIS_PULL_REQUEST ?= "true"
 
 deploy:
-	test $(TRAVIS_PULL_REQUEST) = "false" && \
-	  lein with-profile +$(VERSION) deploy clojars
+	if [ "$(TRAVIS_PULL_REQUEST)" != "false" ]; then \
+	    echo "Pull request detected. Skipping deploy."; \
+	else
+	    lein with-profile +$(VERSION) deploy clojars; \
+	fi
 
 clean:
 	lein clean
