@@ -66,13 +66,13 @@
 Usage: lein sysutils [:edn] :key1 [:key2 :key3 ...]
 
 Sysutils provided a command line interface to print and inspect
-metadata about the current system config, as provided by the Apache
+metadata about the current system config exposed through the Apache
 Commons SystemUtils API. The fields are presented as a hashmap, and
 can be queried by passing in one or more \"keywordized\" field names.
 
 The output is available in two forms. By default keywords and values
 are printed as pairs, separated with whitespace, one pair per line. If
-the optional :edn key is set, then the requested keys are printed as EDN.
+the optional `:edn` key is set, then the requested keys are printed as EDN.
 Depending on your situation you may find one format more convenient than
 the other.
 
@@ -99,7 +99,7 @@ Available Keys:
     (doseq [k (sort (keys (sysutils-map)))]
       (println (str "    " k)))
     (println "
-For more information on the available keys and what they mean, see
+For more information on the available keys and what they mean, see the
 Apache Documentation:
 
 https://commons.apache.org/proper/commons-lang/javadocs/api-3.5/org/apache/commons/lang3/SystemUtils.html")))
