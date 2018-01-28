@@ -25,7 +25,7 @@
 (defn sysutils-public-fields
   "Find the names of the public fields in SystemUtils via reflection."
   []
-  (->> (reflect SystemUtils) 
+  (->> (reflect SystemUtils)
        :members
        (filter (partial instance? clojure.reflect.Field))
        (filter (comp :public :flags))

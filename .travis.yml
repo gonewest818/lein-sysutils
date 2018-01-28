@@ -1,0 +1,55 @@
+language: clojure
+lein: 2.8.1
+sudo: false
+cache:
+  directories:
+    - $HOME/.m2
+script:
+  - make $TARGET
+env:
+  matrix:
+    - VERSION=1.7 TARGET=test
+    - VERSION=1.8 TARGET=test
+    - VERSION=1.9 TARGET=test
+#  global:
+#    - secure: <CLOJARS_USERNAME>
+#    - secure: <CLOJARS_PASSWORD>
+jdk:
+  - openjdk7
+  - openjdk8
+  - oraclejdk8
+  - oraclejdk9
+stages:
+  - name: test
+  - name: check
+  - name: deploy
+    if: branch = master
+jobs:
+  include:
+    # Test Clojure master against a single JDK
+    - env: VERSION=master TARGET=test
+      jdk: oraclejdk8
+
+    # Coverage analysis
+    - env: VERSION=1.9 TARGET=cloverage
+      jdk: oraclejdk8
+      after_success:
+      - bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
+
+    # Eastwood linter
+    - stage: check
+      env: VERSION=1.9 TARGET=eastwood
+      jdk: oraclejdk8
+
+    # Check cljfmt
+    - stage: check
+      env: VERSION=1.9 TARGET=cljfmt
+      jdk: oraclejdk8
+
+    # Deployment
+    - stage: deploy
+      env: TARGET=deploy
+      jdk: oraclejdk8
+
+  allow_failures:
+    - env: VERSION=master TARGET=test
