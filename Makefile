@@ -39,7 +39,7 @@ TRAVIS_PULL_REQUEST ?= "true"
 
 deploy:
 	test $(TRAVIS_PULL_REQUEST) = "false" && \
-	lein with-profile +$(VERSION),+plugin.mranderson/config deploy clojars
+	  lein with-profile +$(VERSION) deploy clojars
 
 clean:
 	lein clean
