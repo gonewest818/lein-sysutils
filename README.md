@@ -2,6 +2,12 @@
 
 Query system information via Apache commons SystemUtils
 
+
+[![Build Status](https://travis-ci.org/gonewest818/lein-sysutils.svg?branch=master)](https://travis-ci.org/gonewest818/lein-sysutils)
+[![Code Coverage](https://codecov.io/gh/gonewest818/lein-sysutils/branch/master/graph/badge.svg)](https://codecov.io/gh/gonewest818/lein-sysutils)
+[![Dependencies Status](https://jarkeeper.com/gonewest818/lein-sysutils/status.svg)](https://jarkeeper.com/gonewest818/lein-sysutils)
+[![Clojars Project](https://img.shields.io/clojars/v/lein-sysutils.svg)](https://clojars.org/lein-sysutils)
+
 ## Configuration:
 
     :plugins [[lein-sysconfig "0.1.0-SNAPSHOT"]]
