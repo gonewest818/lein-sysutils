@@ -10,7 +10,7 @@ Query system information via Apache commons SystemUtils
 
 ## Configuration:
 
-    :plugins [[lein-sysutils "0.1.0"]]
+    :plugins [[lein-sysutils "0.2.0"]]
 
 ## Usage:
 

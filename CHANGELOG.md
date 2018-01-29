@@ -5,6 +5,6 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - none
 
-## 0.1.0
+## 0.2.0
 ### Changed
 - First release
