@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. This change
 
 ## Unreleased
 ### Changed
-- none
+- [#1] Ensure CI jobs running in forks don't attempt to deploy to our Clojars account.
 
 ## 0.2.0
 ### Changed
