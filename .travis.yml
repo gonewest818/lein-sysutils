@@ -23,7 +23,7 @@ stages:
   - name: test
   - name: check
   - name: deploy
-    if: branch = master
+    if: ( branch = master ) OR ( tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+.*$ )
 jobs:
   include:
     # Test Clojure master against a single JDK
