@@ -37,3 +37,17 @@
 (deftest sysutils-lookup-test
   (is (= (System/getenv "USER") (sysutils-lookup "USER_NAME")))
   (is (= false (sysutils-lookup "IS_JAVA_1_1"))))
+
+(deftest main-test
+  (with-redefs [sysutils-public-fields (constantly `("FOO" "BAR" "MY_FIELD"))
+                sysutils-lookup {"FOO" "foo" "BAR" "bar" "MY_FIELD" true}]
+    (is (= ":foo foo\n"
+           (with-out-str (sysutils {} ":foo"))))
+    (is (= "{:foo \"foo\"}\n"
+           (with-out-str (sysutils {} ":edn" ":foo"))))
+    ;; currently can't guarantee order of results
+    (is (#{":foo foo\n:bar bar\n" ":bar bar\n:foo foo\n"}
+         (with-out-str (sysutils {} ":foo" ":bar"))))
+    ;; currently can't guarantee order of results
+    (is (#{"{:foo \"foo\", :bar \"bar\"}\n" "{:bar \"bar\", :foo \"foo\"}\n"}
+         (with-out-str (sysutils {} ":edn" ":foo" ":bar"))))))
