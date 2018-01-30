@@ -13,3 +13,27 @@
   (is (= :two-words   (keywordize "TWO_WORDS")))
   (is (= :digits-1234 (keywordize "DIGITS_1234")))
   (is (= :dots.ok     (keywordize "DOTS.OK"))))
+
+(deftest format-output-test
+  (let [m {:a true :b "quoted string"}]
+    (is (= "{:a true, :b \"quoted string\"}\n"
+           (with-out-str (format-output m :edn))))
+    (is (= ":a true\n:b quoted string\n"
+           (with-out-str (format-output m nil))))))
+
+(deftest help-test
+  (is (= "Query system information via Apache commons SystemUtils"
+         (first (clojure.string/split-lines (help))))))
+
+(deftest sysutils-map-test
+  (with-redefs [sysutils-public-fields (constantly `("FOO" "BAR" "MY_FIELD"))
+                sysutils-lookup {"FOO" "foo" "BAR" "bar" "MY_FIELD" true}]
+    (let [m (sysutils-map)]
+      (is (= "foo" (:foo m)))
+      (is (= "bar" (:bar m)))
+      (is (= true (:my-field m)))
+      (is (= "unknown" (:java-version-simple m))))))
+
+(deftest sysutils-lookup-test
+  (is (= (System/getenv "USER") (sysutils-lookup "USER_NAME")))
+  (is (= false (sysutils-lookup "IS_JAVA_1_1"))))

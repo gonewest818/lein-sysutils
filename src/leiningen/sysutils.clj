@@ -31,6 +31,11 @@
        (filter (comp :public :flags))
        (map :name)))
 
+(defn sysutils-lookup
+  "Lookup the value of a SystemUtils field by name."
+  [n]
+  (eval (symbol (str "org.apache.commons.lang3.SystemUtils/" n))))
+
 (defn keywordize
   "Convert a Java field name to an idiomatic Clojure keyword."
   [n]
@@ -46,7 +51,7 @@
   []
   (let [names  (sysutils-public-fields)
         keys   (map keywordize names)
-        values (map #(eval (symbol (str "org.apache.commons.lang3.SystemUtils/" %))) names)]
+        values (map sysutils-lookup names)]
     (assoc-java-version-simple (zipmap keys values))))
 
 (defn format-output
