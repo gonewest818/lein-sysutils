@@ -71,7 +71,7 @@
         values (map sysutils-lookup names)]
     (-> (zipmap keys values)
         (add-java-versions)
-        (assoc-java-version-simple ))))
+        (assoc-java-version-simple))))
 
 (defn format-output
   "Print the map m. If the edn parameter is false then print exactly one

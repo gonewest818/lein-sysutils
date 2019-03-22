@@ -15,8 +15,8 @@
     (is (false? (:is-java-12 m))))
   (let [m (add-java-versions {:is-java-10 false
                               :is-java-12 true})]
-    (is (false? (:is-java-10 m))
-        (true? (:is-java-12 m)))))
+    (is (false? (:is-java-10 m)))
+    (is (true? (:is-java-12 m)))))
 
 (deftest extend-is-java-x-test
   (let [m (sysutils-map)]
