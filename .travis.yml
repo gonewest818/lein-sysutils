@@ -17,8 +17,11 @@ env:
 jdk:
   - openjdk7
   - openjdk8
+  - openjdk11
   - oraclejdk8
   - oraclejdk9
+  - oraclejdk10
+  - oraclejdk11
 stages:
   - name: test
   - name: check
