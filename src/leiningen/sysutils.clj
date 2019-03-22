@@ -19,6 +19,8 @@
              (:is-java-1-8 m) "1.8"
              (:is-java-9   m)   "9" ; new naming per JEP 223
              (:is-java-10  m)  "10" ; anticipating commons-lang >= 3.7
+             (:is-java-11  m)  "11"
+             (:is-java-12  m)  "12"
              :else            "unknown")]
     (assoc m :java-version-simple sv)))
 
@@ -41,6 +43,21 @@
   [n]
   (-> (clojure.string/replace n #"_" "-") clojure.string/lower-case keyword))
 
+(defn add-java-versions
+  "See this for logic:
+  https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/SystemUtils.java"
+  [m]
+  (let [versions {:is-java-10 "10"
+                  :is-java-11 "11"
+                  :is-java-12 "12"}]
+    (reduce (fn [m-acc is-java-k]
+              (if-not (contains? m is-java-k)
+                (assoc m-acc is-java-k
+                       (boolean (= (:java-specification-version m)
+                                   (get versions is-java-k))))
+                m-acc))
+            m (keys versions))))
+
 (defn sysutils-map
   "Return the SystemUtils data as a map. The keys are the field names
   translated to idiomatic Clojure keywords. For example the resulting
@@ -52,7 +69,9 @@
   (let [names  (sysutils-public-fields)
         keys   (map keywordize names)
         values (map sysutils-lookup names)]
-    (assoc-java-version-simple (zipmap keys values))))
+    (-> (zipmap keys values)
+        (add-java-versions)
+        (assoc-java-version-simple ))))
 
 (defn format-output
   "Print the map m. If the edn parameter is false then print exactly one

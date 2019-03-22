@@ -8,6 +8,21 @@
   (let [m (assoc-java-version-simple {:is-java-1-1 true})]
     (is (= "1.1" (:java-version-simple m)) "known java version")))
 
+(deftest add-java-versions-test
+  (let [m (add-java-versions {:java-specification-version "11"})]
+    (is (false? (:is-java-10 m)))
+    (is (true? (:is-java-11 m)))
+    (is (false? (:is-java-12 m))))
+  (let [m (add-java-versions {:is-java-10 false
+                              :is-java-12 true})]
+    (is (false? (:is-java-10 m))
+        (true? (:is-java-12 m)))))
+
+(deftest extend-is-java-x-test
+  (let [m (sysutils-map)]
+    (is (= (:java-specification-version m)
+           (:java-version-simple m)))))
+
 (deftest keywordize-test
   (is (= :simple      (keywordize "SIMPLE")))
   (is (= :two-words   (keywordize "TWO_WORDS")))
