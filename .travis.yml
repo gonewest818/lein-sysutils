@@ -8,20 +8,17 @@ script:
   - make $TARGET
 env:
   matrix:
-    - VERSION=1.7 TARGET=test
     - VERSION=1.8 TARGET=test
     - VERSION=1.9 TARGET=test
+    - VERSION=1.10 TARGET=test
   global:
     - secure: "IoVWrkCNDfg2mNRMHZRNim/lDYqEoq0gpe40gsfXqWlLtgmheu+vR5jkhnoirkun/iqt8OBbnJIYWYEsKu72uGPRDRP1FTt3KJPZygK2Oqimhphd8qTXJU+KQVzzpf27HoofmQewk1egrWjRgRaWsIdHc5eUP7aMz56hQM6qF8uYjhsZJ+S+mroxoYi0rd8DN1yH+BhTySglzZZ45/fdCMuT+yEgW/vh9wOn48CSbKTZ4CBwRgzN7GLb2/1ol2827Gs9gEh6EV2d6P8+6DdIw5pha53biMdNi+u6xzeAF5ACRgqWIf092W/+2ldNZ0TeS5WaCHijlN21s4P/9ScaLADwiFGU/RkXOWFDOxHDEZFTia7ITGJhVTV2KWdvJ2pjlAy2xpcnN7VRFm7osSq5/gIOcgq+l7QPVkACFBBzSO87eCVT50epNJET0PpdIW+CRgBhxT2pD5cYEb1Vca4fVrBAiwI07QEI03xQLFLMaSuF2T5sr1O5HXoyaVPNGQXyRGXeVuwUy2Bpol6Ftp6QYOoBEQjWUV0b7Wu/NNofd/5aHvCmlmc+v4pRYpjKnEZ8cWZwMniuRD1h/LW0mie9cTkx8k2LjO29gj3w0pKAalo6gB+CoxVbWEWEe8hmX7Lk/VQ4/bouKvdq/KV+hnvu9s3tUHM2DowFJtyhvfrWnqo="
     - secure: "JyVa2CPPu5Lng7V2isI/ctqBZglHuSLhCm0cTS0l9uUIxSvWcK5NYuHJqAyKKouWkANmFLkXUFnVSHOUlVtGP6GHl2ohsPijNnx0OEp+h+owMcnEVRFeGX4TaCKoiVoSXgeTUex4o6bCxFQxnGQSo/f5HmgbgleQrvy98R9tOdTX/G5JwPwSpee87mBZwBGBWZlrAQpxMBIdYffHuStOBd5xmNgVF5azz5CZcNPISHgXQTzrX/tiMwwb8gmh+DDj2FT4wCDsIDygOSVzh9Pa8tW5VRs4WmjJ7KmZRuiocCkvUpixMoOfDh9QVFw2SSf43G3ploak7e3X0J1yIBD+UaGKaZ2GOn1VT+8huoFajrpYaxlwLl3+P4/caa7+5Wi1Sb7tExULxNZdTpo6oo1WJbLGYY8+P35leLv5rZalm1Bam3j6B+z2cQJapdI8OsVEJRX3He0rT6ItI/c1UPuKB12IwxuLyIyx1t1IZmZVG1p/2uEVkuHtR8zV2CKZ0LUMIlWRuQyLs2pVDIUgosFXoCYXtkq4pKXZyAVDD2PZsmeSSFfrd8x5+p0lOjYlLkuWxy2sIdnQc4vdYfTYePLiMuxNyZGBEzpVAD1ejRbsygTzZnL8EF8n4PbZQVP4xvoJpDJlkeE5CyavJ9uN2NdwgcFS5TTBoVo8tQRhXCq0l/k="
 jdk:
-  - openjdk7
   - openjdk8
   - openjdk9
   - openjdk10
   - openjdk11
-  - oraclejdk8
-  - oraclejdk9
   - oraclejdk11
 stages:
   - name: test
@@ -38,28 +35,28 @@ jobs:
   include:
     # Test Clojure master against a single JDK
     - env: VERSION=master TARGET=test
-      jdk: oraclejdk8
+      jdk: openjdk8
 
     # Coverage analysis
     - env: VERSION=1.9 TARGET=cloverage
-      jdk: oraclejdk8
+      jdk: openjdk8
       after_success:
       - bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
 
     # Eastwood linter
     - stage: check
       env: VERSION=1.9 TARGET=eastwood
-      jdk: oraclejdk8
+      jdk: openjdk8
 
     # Check cljfmt
     - stage: check
       env: VERSION=1.9 TARGET=cljfmt
-      jdk: oraclejdk8
+      jdk: openjdk8
 
     # Deployment
     - stage: deploy
       env: TARGET=deploy
-      jdk: oraclejdk8
+      jdk: openjdk8
 
   allow_failures:
     - env: VERSION=master TARGET=test
