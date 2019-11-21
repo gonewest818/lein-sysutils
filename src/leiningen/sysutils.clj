@@ -1,5 +1,7 @@
 (ns leiningen.sysutils
-  (:require [clojure.reflect :refer [reflect]])
+  (:require [clojure.reflect :refer [reflect]]
+            [clojure.string :as str]
+            [clojure.edn :as edn])
   (:import (org.apache.commons.lang3 SystemUtils)))
 
 (defn assoc-java-version-simple
@@ -41,7 +43,7 @@
 (defn keywordize
   "Convert a Java field name to an idiomatic Clojure keyword."
   [n]
-  (-> (clojure.string/replace n #"_" "-") clojure.string/lower-case keyword))
+  (-> (str/replace n #"_" "-") str/lower-case keyword))
 
 (defn add-java-versions
   "See this for logic:
@@ -132,8 +134,8 @@ https://commons.apache.org/proper/commons-lang/javadocs/api-3.5/org/apache/commo
   "Look up system information via the Apache commons-lang3 API."
   [project & args]
   (let [all     (set (->> args
-                          (map clojure.edn/read-string)
+                          (map edn/read-string)
                           (filter keyword?))) ; ignore non-keywords for now
-        edn     (:edn all)
+        as-edn  (:edn all)
         queries (remove #{:edn} all)]
-    (format-output (select-keys (sysutils-map) queries) edn)))
+    (format-output (select-keys (sysutils-map) queries) as-edn)))

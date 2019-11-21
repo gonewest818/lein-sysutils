@@ -29,6 +29,6 @@
                       :dependencies [[org.clojure/clojure "1.11.0-master-SNAPSHOT"]]}
 
              ;; CI
-             :cloverage {:plugins [[lein-cloverage "1.0.10"]]}
-             :cljfmt {:plugins [[lein-cljfmt "0.5.7"]]}
-             :eastwood {:plugins [[jonase/eastwood "0.2.5"]]}})
+             :cloverage {:plugins [[lein-cloverage "1.1.1"]]}
+             :cljfmt {:plugins [[lein-cljfmt "0.6.5"]]}
+             :eastwood {:plugins [[jonase/eastwood "0.3.6"]]}})

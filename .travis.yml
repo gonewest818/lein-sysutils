@@ -1,5 +1,5 @@
 language: clojure
-lein: 2.8.1
+lein: 2.9.1
 sudo: false
 cache:
   directories:
@@ -38,19 +38,19 @@ jobs:
       jdk: openjdk8
 
     # Coverage analysis
-    - env: VERSION=1.9 TARGET=cloverage
+    - env: VERSION=1.10 TARGET=cloverage
       jdk: openjdk8
       after_success:
       - bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
 
     # Eastwood linter
     - stage: check
-      env: VERSION=1.9 TARGET=eastwood
+      env: VERSION=1.10 TARGET=eastwood
       jdk: openjdk8
 
     # Check cljfmt
     - stage: check
-      env: VERSION=1.9 TARGET=cljfmt
+      env: VERSION=1.10 TARGET=cljfmt
       jdk: openjdk8
 
     # Deployment
