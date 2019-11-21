@@ -10,7 +10,7 @@ Query system information via Apache commons SystemUtils
 
 ## Configuration:
 
-    :plugins [[lein-sysutils "0.2.0"]]
+    :plugins [[lein-sysutils "0.3.0"]]
 
 ## Usage:
 
@@ -31,8 +31,15 @@ To make life easier for devops, the plugin provides an additional
 query that is not directly available in the SystemUtils library. The
 `:java-version-simple` key is mapped to a string that indicates which
 "release" of Java is currently in use. Because of inconsistent
-naming across vendors and releases, here the string with be normalized
+naming across vendors and releases, here the string will be normalized
 to "1.1", "1.2", ... "1.8", or for newer releases "9" and "10".
+
+Note: The version of `commons-lang3` we use is a transitive dependency
+inside leiningen itself. For now that means we're constrained to whatever
+keys are specified in that version of the package (which may or may not
+be the latest).  Version 0.3.0 of this library tries to replicate the
+logic for the `:is-java-##` keys to add support for newer Java releases
+even when `commons-lang3` isn't current.
 
 ## Examples:
 
@@ -62,6 +69,9 @@ to "1.1", "1.2", ... "1.8", or for newer releases "9" and "10".
     :is-java-1-7
     :is-java-1-8
     :is-java-1-9
+    :is-java-10
+    :is-java-11
+    :is-java-12
     :is-java-9
     :is-os-400
     :is-os-aix
