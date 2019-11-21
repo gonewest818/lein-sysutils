@@ -1,4 +1,4 @@
-(defproject lein-sysutils "0.3.0"
+(defproject lein-sysutils "0.4.0-SNAPSHOT"
   :description "Query Java system parameters in Leiningen"
   :url "https://github.com/gonewest818/lein-sysutils"
   :license {:name "Eclipse Public License"
